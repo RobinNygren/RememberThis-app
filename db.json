@@ -1,0 +1,26 @@
+{
+  "daily": [
+    {
+      "id": 1,
+      "task": "Morgonträning",
+      "date": "2024-12-04",
+      "reminder": "08:00"
+    }
+  ],
+  "weekly": [
+    {
+      "id": 2,
+      "task": "Städa huset",
+      "date": "2024-12-09",
+      "reminder": "10:00"
+    }
+  ],
+  "monthly": [
+    {
+      "id": 3,
+      "task": "Betala räkningar",
+      "date": "2024-12-31",
+      "reminder": "12:00"
+    }
+  ]
+}
