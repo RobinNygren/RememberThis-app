@@ -34,19 +34,19 @@ const TasksProvider = ({ children }: { children: React.ReactNode }) => {
     fetchTasks();
   }, []);
 
+  // Ge initial tom state så att komponenterna kan använda kontexten direkt
+  const initialState = {
+    daily: daily || [],
+    weekly: weekly || [],
+    monthly: monthly || [],
+    addTask,
+    fetchTasks,
+  };
+
   return (
-    <TasksContext.Provider
-      value={{
-        daily: daily || [],
-        weekly: weekly || [],
-        monthly: monthly || [],
-        addTask,
-        fetchTasks,
-      }}
-    >
+    <TasksContext.Provider value={initialState}>
       {children}
     </TasksContext.Provider>
   );
 };
-
 export default TasksProvider;

@@ -20,3 +20,19 @@ export type FetchState<T> = {
   error: string | null;
   loading: boolean;
 };
+
+export type AgendaItem = {
+  name: string;
+};
+
+export type Day = {
+  dateString: string; // YYYY-MM-DD format
+  day: number;
+  month: number;
+  year: number;
+  timestamp: number;
+};
+
+// workaround för att bli av med varningar om att ingen default export finns
+const defaultExport = {};
+export default defaultExport;

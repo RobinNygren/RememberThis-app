@@ -30,3 +30,5 @@ export const useFetch = <FetchType, PostType>(endpoint: string) => {
 
   return { ...state, fetchData, postData };
 };
+
+export default useFetch;

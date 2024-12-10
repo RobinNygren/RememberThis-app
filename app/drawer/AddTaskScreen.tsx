@@ -3,7 +3,7 @@ import { View, TextInput, Button, StyleSheet } from "react-native";
 import { useTasks } from "../hooks/useTasks";
 import { Task, TaskType } from "../types/types";
 
-const AddTaskScreen: React.FC = () => {
+const AddTaskScreen = () => {
   const [task, setTask] = useState("");
   const [date, setDate] = useState("");
   const [reminder, setReminder] = useState("");
@@ -40,6 +40,12 @@ const AddTaskScreen: React.FC = () => {
         style={styles.input}
       />
       <Button title="Add Task" onPress={handleAddTask} />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Button
+          title="Testa Knappen"
+          onPress={() => alert("Knappen fungerar!")}
+        />
+      </View>
     </View>
   );
 };
