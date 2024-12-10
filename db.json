@@ -61,6 +61,12 @@
       "task": "Städa huset",
       "date": "2024-12-09",
       "reminder": "10:00"
+    },
+    {
+      "id": 1733838077367,
+      "task": "Städa bilen",
+      "date": "2024-12-31",
+      "reminder": "18:00"
     }
   ],
   "monthly": [
@@ -68,6 +74,12 @@
       "id": "3",
       "task": "Betala räkningar",
       "date": "2024-12-31",
+      "reminder": "12:00"
+    },
+    {
+      "id": 1733838015158,
+      "task": "Boka tvättstugan",
+      "date": "2024-12-13",
       "reminder": "12:00"
     }
   ]
