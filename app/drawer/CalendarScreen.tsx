@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTasks } from "../hooks/useTasks";
 import { Calendar } from "react-native-calendars";
 import { Day, TaskType } from "../types/types";
+import { mapTasksWithType } from "../utils/mapTasksWithType";
 
 const CalendarScreen = () => {
   const { daily, weekly, monthly } = useTasks();
@@ -16,12 +17,7 @@ const CalendarScreen = () => {
     monthly: "#E94E77", // Röd
   };
 
-  // Samla alla tasks och märk med typ
-  const allTasks = [
-    ...daily.map((task) => ({ ...task, type: "daily" as TaskType })),
-    ...weekly.map((task) => ({ ...task, type: "weekly" as TaskType })),
-    ...monthly.map((task) => ({ ...task, type: "monthly" as TaskType })),
-  ];
+  const allTasks = mapTasksWithType(daily, weekly, monthly);
 
   // Generera markedDates för kalendern
   const markedDates = allTasks.reduce((acc: any, task) => {

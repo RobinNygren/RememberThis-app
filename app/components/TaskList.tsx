@@ -9,7 +9,10 @@ const TaskList = ({ tasks }: TaskListProps) => {
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <View
-          style={[styles.taskItem, { borderColor: getColorByType(item.type) }]}
+          style={[
+            styles.taskItem,
+            { backgroundColor: getColorByType(item.type) },
+          ]}
         >
           <Text style={styles.taskText}>{item.task}</Text>
           <Text>{`Date: ${item.date}`}</Text>
