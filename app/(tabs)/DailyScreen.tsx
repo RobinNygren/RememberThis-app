@@ -1,6 +1,7 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { useTasks } from "../hooks/useTasks";
 import TaskList from "../components/TaskList";
+import { mapTasksWithType } from "../utils/mapTasksWithType";
 
 const DailyScreen = () => {
   const { daily } = useTasks(); // Hämta dagliga tasks från context
@@ -9,7 +10,7 @@ const DailyScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TaskList tasks={daily} />
+      <TaskList tasks={daily.map((task) => ({ ...task, type: "daily" }))} />
     </View>
   );
 };

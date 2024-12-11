@@ -4,18 +4,10 @@ import { useTasks } from "../hooks/useTasks";
 import { Calendar } from "react-native-calendars";
 import { Day, TaskType } from "../types/types";
 import { mapTasksWithType } from "../utils/mapTasksWithType";
+import { getTaskColor } from "../utils/getTaskColor";
 
 const CalendarScreen = () => {
   const { daily, weekly, monthly } = useTasks();
-
-  // Färger för olika typer av tasks
-  // Record<TaskType, string> skapar ett objekt där nycklarna är "daily", "weekly", och "monthly" (TaskType)
-  // och värdena är strängar, dvs. färgerna
-  const colors: Record<TaskType, string> = {
-    daily: "#4A90E2", // Blå
-    weekly: "#50E3C2", // Grön
-    monthly: "#E94E77", // Röd
-  };
 
   const allTasks = mapTasksWithType(daily, weekly, monthly);
 
@@ -25,9 +17,9 @@ const CalendarScreen = () => {
 
     // Om datumet redan finns, lägg till en extra "dot"
     if (!acc[date]) {
-      acc[date] = { dots: [{ color: colors[type] }] }; // Skapa första dot
+      acc[date] = { dots: [{ color: getTaskColor(type) }] }; // Skapa första dot
     } else {
-      acc[date].dots.push({ color: colors[type] }); // Lägg till fler dots
+      acc[date].dots.push({ color: getTaskColor(type) }); // Lägg till fler dots
     }
 
     acc[date].dots = acc[date].dots.slice(0, 3); // Begränsa till 3 dots
@@ -74,7 +66,7 @@ const CalendarScreen = () => {
             <View
               style={[
                 styles.taskItem,
-                { backgroundColor: colors[item.type as TaskType] },
+                { backgroundColor: getTaskColor(item.type) },
               ]}
             >
               <Text style={styles.taskText}>{item.task}</Text>

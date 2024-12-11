@@ -81,6 +81,41 @@
       "task": "Boka tvättstugan",
       "date": "2024-12-13",
       "reminder": "12:00"
+    },
+    {
+      "id": 1733922039767,
+      "task": "",
+      "date": "",
+      "reminder": "",
+      "type": "monthly"
+    },
+    {
+      "id": 1733922041327,
+      "task": "",
+      "date": "",
+      "reminder": "",
+      "type": "monthly"
+    },
+    {
+      "id": 1733922041633,
+      "task": "",
+      "date": "",
+      "reminder": "",
+      "type": "monthly"
+    },
+    {
+      "id": 1733922056317,
+      "task": "",
+      "date": "",
+      "reminder": "",
+      "type": "monthly"
+    },
+    {
+      "id": 1733922057736,
+      "task": "",
+      "date": "",
+      "reminder": "",
+      "type": "monthly"
     }
   ]
 }

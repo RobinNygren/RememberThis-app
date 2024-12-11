@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import { View, TextInput, Text, StyleSheet, Pressable } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useTasks } from "../hooks/useTasks";
 import { Task, TaskType } from "../types/types";
+import TASK_COLORS from "../utils/getTaskColor";
 
 const AddTaskScreen = () => {
   const [task, setTask] = useState("");
@@ -50,7 +51,16 @@ const AddTaskScreen = () => {
         <Picker.Item label="Weekly" value="weekly" />
         <Picker.Item label="Monthly" value="monthly" />
       </Picker>
-      <Button title="Add Task" onPress={handleAddTask} />
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          { backgroundColor: TASK_COLORS[type] },
+          pressed && styles.buttonPressed,
+        ]}
+        onPress={handleAddTask}
+      >
+        <Text style={styles.buttonText}>Add Task</Text>
+      </Pressable>
     </View>
   );
 };
@@ -70,6 +80,19 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     marginBottom: 20,
+  },
+  button: {
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonPressed: {
+    opacity: 0.8, // Visuell feedback vid tryck
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
 

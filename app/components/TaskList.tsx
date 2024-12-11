@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { TaskListProps, TaskType } from "../types/types";
+import { getTaskColor } from "../utils/getTaskColor";
 
 const TaskList = ({ tasks }: TaskListProps) => {
   return (
@@ -11,7 +12,7 @@ const TaskList = ({ tasks }: TaskListProps) => {
         <View
           style={[
             styles.taskItem,
-            { backgroundColor: getColorByType(item.type) },
+            { backgroundColor: getTaskColor(item.type) },
           ]}
         >
           <Text style={styles.taskText}>{item.task}</Text>
@@ -21,16 +22,6 @@ const TaskList = ({ tasks }: TaskListProps) => {
       )}
     />
   );
-};
-
-// Helper function to get color by type
-const getColorByType = (type: TaskType) => {
-  const colors: Record<TaskType, string> = {
-    daily: "#4A90E2",
-    weekly: "#50E3C2",
-    monthly: "#E94E77",
-  };
-  return colors[type] || "#ccc"; // Default color if no match
 };
 
 const styles = StyleSheet.create({
