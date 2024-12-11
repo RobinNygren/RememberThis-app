@@ -13,7 +13,7 @@ const AddTaskScreen = () => {
   const { addTask } = useTasks();
 
   const handleAddTask = async () => {
-    const newTask: Task = { id: Date.now(), task, date, reminder };
+    const newTask: Task = { id: Date.now(), task, date, reminder, type };
     await addTask(newTask, type);
     setTask("");
     setDate("");

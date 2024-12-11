@@ -75,7 +75,12 @@ const CalendarScreen = () => {
           data={tasksForSelectedDate}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.taskItem}>
+            <View
+              style={[
+                styles.taskItem,
+                { backgroundColor: colors[item.type as TaskType] },
+              ]}
+            >
               <Text style={styles.taskText}>{item.task}</Text>
             </View>
           )}
@@ -113,6 +118,7 @@ const styles = StyleSheet.create({
   },
   taskText: {
     fontSize: 16,
+    color: "#fff",
   },
   emptyText: {
     textAlign: "center",

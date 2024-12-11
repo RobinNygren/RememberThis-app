@@ -3,6 +3,7 @@ export type Task = {
   task: string;
   date: string; // Format: YYYY-MM-DD
   reminder: string; // Format: HH:mm
+  type: TaskType;
 };
 
 export type TaskType = "daily" | "weekly" | "monthly";
@@ -13,6 +14,10 @@ export type TasksContextType = {
   monthly: Task[];
   addTask: (task: Task, type: TaskType) => Promise<void>;
   fetchTasks: () => Promise<void>;
+};
+
+export type TaskListProps = {
+  tasks: Task[];
 };
 
 export type FetchState<T> = {
