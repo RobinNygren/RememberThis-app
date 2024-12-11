@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TasksContext from "./TasksContext";
 import { Task, TaskType } from "../types/types";
 import { useFetch } from "../hooks/useFetch";
+import { Text } from "react-native";
 
 const TasksProvider = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -20,8 +21,14 @@ const TasksProvider = ({ children }: { children: React.ReactNode }) => {
     postData: postMonthly,
   } = useFetch<Task[], Task>("/monthly");
 
+  const [loading, setLoading] = useState(true); // Lägg till loading state
+
   const fetchTasks = async () => {
-    await Promise.all([fetchDaily(), fetchWeekly(), fetchMonthly()]);
+    try {
+      await Promise.all([fetchDaily(), fetchWeekly(), fetchMonthly()]);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
   };
 
   const addTask = async (task: Task, type: TaskType) => {
@@ -31,8 +38,12 @@ const TasksProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    fetchTasks();
+    fetchTasks().finally(() => setLoading(false)); // Uppdatera loading state när hämtning är klar
   }, []);
+
+  if (loading) {
+    return <Text>Loading tasks...</Text>;
+  }
 
   // Ge initial tom state så att komponenterna kan använda kontexten direkt
   const initialState = {

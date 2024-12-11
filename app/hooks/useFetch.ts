@@ -4,7 +4,7 @@ import { FetchState } from "../types/types";
 
 export const useFetch = <FetchType, PostType>(endpoint: string) => {
   const [state, setState] = useState<FetchState<FetchType>>({
-    data: null,
+    data: [] as unknown as FetchType,
     error: null,
     loading: false,
   });
@@ -16,6 +16,7 @@ export const useFetch = <FetchType, PostType>(endpoint: string) => {
       const response = await apiClient.get<FetchType>(endpoint);
       setState({ data: response.data, error: null, loading: false });
     } catch (error: any) {
+      console.error(`Error fetching data from ${endpoint}:`, error);
       setState({ data: null, error: error.message, loading: false });
     }
   };

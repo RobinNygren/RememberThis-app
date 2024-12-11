@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { View, TextInput, Text, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+  Pressable,
+  Alert,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useTasks } from "../hooks/useTasks";
 import { Task, TaskType } from "../types/types";
@@ -11,14 +18,40 @@ const AddTaskScreen = () => {
   const [reminder, setReminder] = useState("");
   const [type, setType] = useState<TaskType>("daily"); // Default: daily
 
+  const [errorFields, setErrorFields] = useState<{
+    task: boolean;
+    date: boolean;
+    reminder: boolean;
+  }>({
+    task: false,
+    date: false,
+    reminder: false,
+  });
+
   const { addTask } = useTasks();
 
   const handleAddTask = async () => {
+    const errors = {
+      task: !task.trim(),
+      date: !date.trim(),
+      reminder: !reminder.trim(),
+    };
+
+    setErrorFields(errors);
+
+    if (Object.values(errors).some((hasError) => hasError)) {
+      Alert.alert("Validation Error", "Please fill in all fields.");
+      return;
+    }
+
     const newTask: Task = { id: Date.now(), task, date, reminder, type };
     await addTask(newTask, type);
+
+    // Reset form
     setTask("");
     setDate("");
     setReminder("");
+    setErrorFields({ task: false, date: false, reminder: false });
   };
 
   return (
@@ -27,19 +60,19 @@ const AddTaskScreen = () => {
         placeholder="Task"
         value={task}
         onChangeText={setTask}
-        style={styles.input}
+        style={[styles.input, errorFields.task && styles.inputError]}
       />
       <TextInput
         placeholder="Date (YYYY-MM-DD)"
         value={date}
         onChangeText={setDate}
-        style={styles.input}
+        style={[styles.input, errorFields.date && styles.inputError]}
       />
       <TextInput
         placeholder="Reminder (HH:mm)"
         value={reminder}
         onChangeText={setReminder}
-        style={styles.input}
+        style={[styles.input, errorFields.reminder && styles.inputError]}
       />
       {/* Välj typ av task */}
       <Picker
@@ -77,6 +110,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
   },
+  inputError: {
+    borderColor: "red", // Visuell feedback för fel
+  },
   picker: {
     height: 50,
     marginBottom: 20,
@@ -87,6 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonPressed: {
+    transform: [{ scale: 0.95 }],
     opacity: 0.8, // Visuell feedback vid tryck
   },
   buttonText: {
