@@ -1,11 +1,10 @@
 import { useState } from "react";
 import apiClient from "../utils/apiClient";
-import { FetchState } from "../types/types";
 
-export const useFetch = <FetchType, PostType>(endpoint: string) => {
-  const [state, setState] = useState<FetchState<FetchType>>({
-    data: [] as unknown as FetchType,
-    error: null,
+export const useFetch = <FetchType>(endpoint: string) => {
+  const [state, setState] = useState({
+    data: null as FetchType | null,
+    error: null as string | null,
     loading: false,
   });
 
@@ -21,15 +20,7 @@ export const useFetch = <FetchType, PostType>(endpoint: string) => {
     }
   };
 
-  const postData = async (payload: PostType) => {
-    try {
-      await apiClient.post<PostType>(endpoint, payload);
-    } catch (error: any) {
-      setState({ ...state, error: error.message, loading: false });
-    }
-  };
-
-  return { ...state, fetchData, postData };
+  return { ...state, fetchData };
 };
 
 export default useFetch;
