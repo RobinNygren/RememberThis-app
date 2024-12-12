@@ -3,6 +3,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import DailyScreen from "./DailyScreen";
 import WeeklyScreen from "./WeeklyScreen";
 import MonthlyScreen from "./MonthlyScreen";
+import { Platform } from "react-native";
+
+const isWeb = Platform.OS === "web";
 
 const Tab = createBottomTabNavigator();
 
@@ -11,6 +14,13 @@ export default function TabsLayout() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false, // Dölj header för flikarna
+        tabBarStyle: {
+          height: isWeb ? 60 : 60, // Justera höjd för webben
+          backgroundColor: "#fff",
+        },
+        tabBarLabelStyle: {
+          fontSize: isWeb ? 10 : 14, // Mindre text på webben
+        },
       }}
     >
       <Tab.Screen
