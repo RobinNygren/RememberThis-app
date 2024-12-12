@@ -23,6 +23,13 @@
       "task": "köpa glögg",
       "date": "2024-12-13",
       "reminder": "17:00"
+    },
+    {
+      "id": "1734044261941",
+      "task": "Test",
+      "date": "2024-12-14",
+      "reminder": "15:00",
+      "type": "daily"
     }
   ],
   "weekly": [
