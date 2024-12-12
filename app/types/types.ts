@@ -42,6 +42,20 @@ export type Day = {
   timestamp: number;
 };
 
+export type TasksState = {
+  daily: Task[];
+  weekly: Task[];
+  monthly: Task[];
+  loading: boolean;
+};
+
+export type TasksAction =
+  | { type: "SET_TASKS"; payload: { type: TaskType; tasks: Task[] } }
+  | { type: "ADD_TASK"; payload: { type: TaskType; task: Task } }
+  | { type: "UPDATE_TASK"; payload: { type: TaskType; task: Task } }
+  | { type: "DELETE_TASK"; payload: { type: TaskType; id: string } }
+  | { type: "SET_LOADING"; payload: boolean };
+
 // OBS: Default export används inte, endast för att förhindra varningar
 const defaultExport = {};
 export default defaultExport;
