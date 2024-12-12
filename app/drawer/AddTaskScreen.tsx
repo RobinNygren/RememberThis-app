@@ -44,7 +44,13 @@ const AddTaskScreen = () => {
       return;
     }
 
-    const newTask: Task = { id: Date.now(), task, date, reminder, type };
+    const newTask: Task = {
+      id: Date.now().toString(),
+      task,
+      date,
+      reminder,
+      type,
+    };
     await addTask(newTask, type);
 
     // Reset form

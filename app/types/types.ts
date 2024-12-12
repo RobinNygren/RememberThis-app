@@ -1,5 +1,5 @@
 export type Task = {
-  id: number;
+  id: string;
   task: string;
   date: string; // Format: YYYY-MM-DD
   reminder: string; // Format: HH:mm
@@ -13,11 +13,15 @@ export type TasksContextType = {
   weekly: Task[];
   monthly: Task[];
   addTask: (task: Task, type: TaskType) => Promise<void>;
+  updateTask: (task: Task, type: TaskType) => Promise<void>;
+  deleteTask: (id: string, type: TaskType) => Promise<void>;
   fetchTasks: () => Promise<void>;
 };
 
 export type TaskListProps = {
   tasks: Task[];
+  onEdit: (task: Task) => void;
+  onDelete: (id: string) => void;
 };
 
 export type FetchState<T> = {
@@ -38,6 +42,6 @@ export type Day = {
   timestamp: number;
 };
 
-// workaround för att bli av med varningar om att ingen default export finns
+// OBS: Default export används inte, endast för att förhindra varningar
 const defaultExport = {};
 export default defaultExport;
