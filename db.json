@@ -1,65 +1,28 @@
 {
   "daily": [
     {
-      "id": "1",
-      "task": "Morgonträning",
-      "date": "2024-12-04",
-      "reminder": "08:00"
-    },
-    {
       "id": "1733390526369",
       "task": "Plocka ur diskmaskinen",
       "date": "2024-12-05",
       "reminder": "12:30"
     },
     {
-      "id": "1733390709439",
-      "task": "köpa julklappar",
-      "date": "2024-12-20",
-      "reminder": "12:30"
-    },
-    {
-      "id": "1733404412704",
-      "task": "",
-      "date": "",
-      "reminder": ""
-    },
-    {
-      "id": "1733404413204",
-      "task": "",
-      "date": "",
-      "reminder": ""
-    },
-    {
-      "id": "1733404413453",
-      "task": "",
-      "date": "",
-      "reminder": ""
-    },
-    {
-      "id": 1733836812421,
+      "id": "1733836812421",
       "task": "Luciafirande",
       "date": "2024-12-13",
       "reminder": "07:45"
     },
     {
-      "id": 1733836872047,
+      "id": "1733836872047",
       "task": "Bygga pepparkakshus",
       "date": "2024-12-13",
       "reminder": "14:00"
     },
     {
-      "id": 1733836889399,
+      "id": "1733836889399",
       "task": "köpa glögg",
       "date": "2024-12-13",
       "reminder": "17:00"
-    },
-    {
-      "id": 1733922493775,
-      "task": "asdasd",
-      "date": "2024-12-11",
-      "reminder": "14;10",
-      "type": "daily"
     }
   ],
   "weekly": [
@@ -70,7 +33,7 @@
       "reminder": "10:00"
     },
     {
-      "id": 1733838077367,
+      "id": "1733838077367",
       "task": "Städa bilen",
       "date": "2024-12-31",
       "reminder": "18:00"
@@ -84,44 +47,16 @@
       "reminder": "12:00"
     },
     {
-      "id": 1733838015158,
+      "id": "1733838015158",
       "task": "Boka tvättstugan",
       "date": "2024-12-13",
       "reminder": "12:00"
     },
     {
-      "id": 1733922039767,
-      "task": "",
-      "date": "",
-      "reminder": "",
-      "type": "monthly"
-    },
-    {
-      "id": 1733922041327,
-      "task": "",
-      "date": "",
-      "reminder": "",
-      "type": "monthly"
-    },
-    {
-      "id": 1733922041633,
-      "task": "",
-      "date": "",
-      "reminder": "",
-      "type": "monthly"
-    },
-    {
-      "id": 1733922056317,
-      "task": "",
-      "date": "",
-      "reminder": "",
-      "type": "monthly"
-    },
-    {
-      "id": 1733922057736,
-      "task": "",
-      "date": "",
-      "reminder": "",
+      "id": "1733992632974",
+      "task": "Damma hemma",
+      "date": "2024-12-27",
+      "reminder": "17:30",
       "type": "monthly"
     }
   ]
