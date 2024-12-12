@@ -1,89 +1,159 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import TasksContext from "./TasksContext";
-import { Task, TaskType } from "../types/types";
+import { Task, TaskType, TasksState } from "../types/types";
+import { tasksReducer } from "./tasksReducer";
 import { useFetch } from "../hooks/useFetch";
 import { usePost } from "../hooks/usePost";
 import { usePut } from "../hooks/usePut";
 import { useDelete } from "../hooks/useDelete";
-import { Text, Alert } from "react-native";
+import { Text, Alert, Platform } from "react-native";
+
+const initialTasksState: TasksState = {
+  daily: [],
+  weekly: [],
+  monthly: [],
+  loading: false, // Sätt loading till false initialt
+};
 
 const TasksProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: daily, fetchData: fetchDaily } = useFetch<Task[]>("/daily");
-  const { data: weekly, fetchData: fetchWeekly } = useFetch<Task[]>("/weekly");
-  const { data: monthly, fetchData: fetchMonthly } =
-    useFetch<Task[]>("/monthly");
+  const [state, dispatch] = useReducer(tasksReducer, initialTasksState);
 
-  const { postData: postDaily } = usePost<Task>("/daily");
-  const { postData: postWeekly } = usePost<Task>("/weekly");
-  const { postData: postMonthly } = usePost<Task>("/monthly");
+  const fetchMap = {
+    daily: useFetch<Task[]>("/daily"),
+    weekly: useFetch<Task[]>("/weekly"),
+    monthly: useFetch<Task[]>("/monthly"),
+  };
 
-  const { putData: putDaily } = usePut<Task>("/daily");
-  const { putData: putWeekly } = usePut<Task>("/weekly");
-  const { putData: putMonthly } = usePut<Task>("/monthly");
+  const postMap = {
+    daily: usePost<Task>("/daily"),
+    weekly: usePost<Task>("/weekly"),
+    monthly: usePost<Task>("/monthly"),
+  };
 
-  const { deleteData: deleteDaily } = useDelete("/daily");
-  const { deleteData: deleteWeekly } = useDelete("/weekly");
-  const { deleteData: deleteMonthly } = useDelete("/monthly");
+  const putMap = {
+    daily: usePut<Task>("/daily"),
+    weekly: usePut<Task>("/weekly"),
+    monthly: usePut<Task>("/monthly"),
+  };
 
-  const [loading, setLoading] = useState(true); // Lägg till loading state
+  const deleteMap = {
+    daily: useDelete("/daily"),
+    weekly: useDelete("/weekly"),
+    monthly: useDelete("/monthly"),
+  };
 
   const fetchTasks = async (type?: TaskType) => {
     try {
-      if (type === "daily") await fetchDaily();
-      if (type === "weekly") await fetchWeekly();
-      if (type === "monthly") await fetchMonthly();
-      await Promise.all([fetchDaily(), fetchWeekly(), fetchMonthly()]);
+      if (type) {
+        const tasks = await fetchMap[type].fetchData();
+        if (tasks) {
+          dispatch({ type: "SET_TASKS", payload: { type, tasks } });
+        }
+      } else {
+        await Promise.all(
+          (["daily", "weekly", "monthly"] as TaskType[]).map(
+            async (taskType) => {
+              const tasks = await fetchMap[taskType].fetchData();
+              if (tasks) {
+                dispatch({
+                  type: "SET_TASKS",
+                  payload: { type: taskType, tasks },
+                });
+              }
+            }
+          )
+        );
+      }
     } catch (error) {
       console.error("Error fetching tasks:", error);
+      Alert.alert(
+        "Error Fetching Tasks",
+        "An error occurred while fetching tasks. Please try again later."
+      );
     }
   };
 
   const addTask = async (task: Task, type: TaskType) => {
-    if (type === "daily") await postDaily(task);
-    if (type === "weekly") await postWeekly(task);
-    if (type === "monthly") await postMonthly(task);
-    fetchTasks(type);
+    try {
+      await postMap[type].postData(task);
+      dispatch({ type: "ADD_TASK", payload: { type, task } });
+    } catch (error) {
+      console.error("Error adding task:", error);
+      Alert.alert("Error adding task", "Please try again later.");
+    }
   };
 
   const updateTask = async (task: Task, type: TaskType) => {
     try {
-      if (type === "daily") await putDaily(`/${task.id}`, task);
-      if (type === "weekly") await putWeekly(`/${task.id}`, task);
-      if (type === "monthly") await putMonthly(`/${task.id}`, task);
-      fetchTasks(type);
+      await putMap[type].putData(`/${task.id}`, task);
+      dispatch({ type: "UPDATE_TASK", payload: { type, task } });
     } catch (error) {
       console.error("Error updating task:", error);
-      Alert.alert("Error", "Failed to update the task. Please try again.");
+      Alert.alert("Error updating task", "Please try again later.");
     }
   };
 
   const deleteTask = async (id: string, type: TaskType) => {
-    try {
-      if (type === "daily") await deleteDaily(`/${id}`);
-      if (type === "weekly") await deleteWeekly(`/${id}`);
-      if (type === "monthly") await deleteMonthly(`/${id}`);
-      fetchTasks(type);
-    } catch (error) {
-      console.error("Error deleting task:", error);
-      Alert.alert("Error", "Failed to delete the task. Please try again.");
+    if (Platform.OS === "web") {
+      // Webbspecifik confirm-dialog
+      const confirm = window.confirm(
+        "Are you sure you want to delete this task?"
+      );
+      if (!confirm) {
+        return; // Avbryt om användaren klickar "Cancel"
+      }
+      try {
+        await deleteMap[type].deleteData(`/${id}`);
+        dispatch({ type: "DELETE_TASK", payload: { type, id } });
+      } catch (error) {
+        console.error("Error deleting task:", error);
+        alert("Could not delete the task. Please try again.");
+      }
+    } else {
+      // Native Alert för mobiler
+      Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            try {
+              await deleteMap[type].deleteData(`/${id}`);
+              dispatch({ type: "DELETE_TASK", payload: { type, id } });
+            } catch (error) {
+              console.error("Error deleting task:", error);
+              Alert.alert(
+                "Error Deleting Task",
+                "Could not delete the task. Please try again."
+              );
+            }
+          },
+          style: "destructive",
+        },
+      ]);
     }
   };
 
-  // Förhindra att hooks och rendering körs i onödan genom att sätta loading-state till false
-  // när hämtning av data är klar.
   useEffect(() => {
-    fetchTasks().finally(() => setLoading(false)); // Uppdatera loading state när hämtning är klar
+    const initializeTasks = async () => {
+      dispatch({ type: "SET_LOADING", payload: true });
+      await fetchTasks();
+      dispatch({ type: "SET_LOADING", payload: false });
+    };
+    initializeTasks();
   }, []);
 
-  if (loading) {
+  if (state.loading) {
     return <Text>Loading tasks...</Text>;
   }
 
   // Ge initial tom state så att komponenterna kan använda kontexten direkt
   const initialState = {
-    daily: daily || [],
-    weekly: weekly || [],
-    monthly: monthly || [],
+    daily: state.daily || [],
+    weekly: state.weekly || [],
+    monthly: state.monthly || [],
     addTask,
     updateTask,
     deleteTask,
