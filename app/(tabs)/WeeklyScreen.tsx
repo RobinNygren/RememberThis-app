@@ -7,7 +7,7 @@ const WeeklyScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TaskList tasks={weekly.map((task) => ({ ...task, type: "weekly" }))} />
+      <TaskList tasks={weekly} type="weekly" />
     </View>
   );
 };

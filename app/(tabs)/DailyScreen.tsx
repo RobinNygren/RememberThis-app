@@ -6,11 +6,9 @@ import { mapTasksWithType } from "../utils/mapTasksWithType";
 const DailyScreen = () => {
   const { daily } = useTasks(); // Hämta dagliga tasks från context
 
-  console.log("Daily tasks:", daily); // Kontrollera att varje task har en `type`
-
   return (
     <View style={styles.container}>
-      <TaskList tasks={daily.map((task) => ({ ...task, type: "daily" }))} />
+      <TaskList tasks={daily} type="daily" />
     </View>
   );
 };

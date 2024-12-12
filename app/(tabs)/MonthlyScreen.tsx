@@ -7,7 +7,7 @@ const MonthlyScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TaskList tasks={monthly.map((task) => ({ ...task, type: "monthly" }))} />
+      <TaskList tasks={monthly} type="monthly" />
     </View>
   );
 };
