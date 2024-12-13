@@ -1,7 +1,8 @@
+import { API_BASE_URL } from "@/config";
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://192.168.1.32:3000",
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
