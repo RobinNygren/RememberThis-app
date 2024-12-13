@@ -86,3 +86,21 @@ The app utilizes `React Navigation` to handle seamless navigation between views:
 ### Calendar
 
 The `react-native-calendars` library is integrated for task scheduling and visualization. It displays tasks on a calendar with custom markers to indicate the presence of tasks for specific dates.
+
+---
+
+## ⚙️ API Configuration
+
+The API_BASE_URL (base URL for the API) is stored in a config.ts file for security and flexibility. This file is excluded from version control (using .gitignore) to ensure sensitive information, such as IP addresses, is not pushed to the repository.
+
+### Steps to Configure:
+
+1. If the file is not already present, create a new file in the src or utils folder:
+   ```bash
+   src/config.ts
+   ```
+2. Add the API URL:
+   Inside config.ts, set the base URL to your local server:
+   ```bash
+   export const API_BASE_URL = "http://<your-ip-address>:3000";
+   ```
