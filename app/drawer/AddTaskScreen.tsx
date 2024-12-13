@@ -11,6 +11,7 @@ import { Picker } from "@react-native-picker/picker";
 import { useTasks } from "../hooks/useTasks";
 import { Task, TaskType } from "../types/types";
 import TASK_COLORS from "../utils/getTaskColor";
+import { scheduleNotification } from "../utils/notifications";
 
 const AddTaskScreen = () => {
   const [task, setTask] = useState("");
@@ -52,6 +53,10 @@ const AddTaskScreen = () => {
       type,
     };
     await addTask(newTask, type);
+
+    // Schemalägg notifikation
+    await scheduleNotification(newTask.task, newTask.reminder, newTask.date);
+    console.log("Task:", task, "Date:", date, "Reminder:", reminder);
 
     // Reset form
     setTask("");
