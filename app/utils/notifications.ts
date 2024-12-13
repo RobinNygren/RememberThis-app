@@ -7,6 +7,12 @@ export const scheduleNotification = async (
   reminderTime: string,
   taskDate: string
 ) => {
+  // Kontrollera om vi är på webben
+  if (Platform.OS === "web") {
+    console.log("Notifications are not supported on the web.");
+    return;
+  }
+
   // Validera datum och tid
   const isValidDate = (date: string) => /^\d{4}-\d{2}-\d{2}$/.test(date);
   const isValidTime = (time: string) =>
