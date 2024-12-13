@@ -1,50 +1,88 @@
-# Welcome to your Expo app 👋
+# RememberThis App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+The **RememberThis App** is a React Native application designed to help users create, manage, and be reminded of their daily, weekly, and monthly tasks. Featuring push notifications and calendar integration, this app ensures you never miss a task. The app is cross-platform and works seamlessly on mobile and web via Expo.
 
-## Get started
+## ✨ Features
 
-1. Install dependencies
+- **Task Categories:** Manage tasks for daily, weekly, and monthly schedules.
+- **Push Notifications:** Receive reminders based on scheduled times.
+- **Calendar Integration:** View tasks assigned to specific dates.
+- **CRUD functionality:** Create, edit, and delete tasks with ease.
+- **Cross-Platform:** Runs smoothly on both mobile and web.
 
+## 🚀 Technologies
+
+- **React Native:** For building the user interface on mobile and web.
+- **Expo:** Simplifies push notifications and other functionalities.
+- **TypeScript:** Ensures code reliability with type checking.
+- **React Navigation:** Handles navigation between views and screens.
+- **Axios:** Facilitates API requests to a local JSON server.
+- **React Native Calendars:** Adds calendar support.
+- **Expo Notifications:** Manages push notifications.
+
+## 🔧 Installation
+
+To get started, clone the repository and install the dependencies.
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js
+- npm or yarn
+
+### Steps
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/RobinNygren/RememberThis-app
+   ```
+2. Navigate into the project directory:
+   ```bash
+   cd <project-folder>
+   ```
+3. Install the required dependencies:
    ```bash
    npm install
    ```
-
-2. Start the app
-
+4. Start the JSON Server (for local data management):
    ```bash
-    npx expo start
+   npx json-server db.json
+   ```
+5. Start the Expo Project:
+   ```bash
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+Open the app on your mobile device using the Expo Go app or in your web browser.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🔑 Key Components and Utilities
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Push Notifications
 
-## Get a fresh project
+Push notifications are managed via `expo-notifications`. Key functions are implemented in the file `utils/notifications.ts`:
 
-When you're ready, run:
+- **`registerForPushNotificationsAsync`**: Requests permissions to enable push notifications.
+- **`scheduleNotification`**: Schedules notifications based on the specified task time and date.
 
-```bash
-npm run reset-project
-```
+---
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Navigation
 
-## Learn more
+The app utilizes `React Navigation` to handle seamless navigation between views:
 
-To learn more about developing your project with Expo, look at the following resources:
+- **Drawer Navigator**: Provides a side menu for accessing major features such as task addition and calendar view.
+- **Bottom Tabs Navigator**: Enables quick navigation between Daily, Weekly, and Monthly task categories.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+### Context and Reducers
 
-Join our community of developers creating universal apps.
+- **`TasksContext`**: A global state management solution for handling task-related data across the app.
+- **`tasksReducer`**: Processes actions like adding, editing, and deleting tasks to update the global state efficiently.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+### Calendar
+
+The `react-native-calendars` library is integrated for task scheduling and visualization. It displays tasks on a calendar with custom markers to indicate the presence of tasks for specific dates.
